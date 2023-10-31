@@ -1,3 +1,5 @@
+
+//importações
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -6,11 +8,13 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger/swagger_output.json');
 const swaggerOptions = { customCssUrl: '/swagger-ui.css' };
-
-const usersRouter = require('./routes/users');
-
+const routes = require('./src/routes');
 const app = express();
 require('dotenv').config();
+
+
+
+//Configuração do express
 
 app.use(cors());
 app.use(logger('dev'));
@@ -19,9 +23,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => { /* #swagger.ignore = true */ res.redirect('/doc'); });
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerOptions));
-app.use('/users', usersRouter);
+//config swagger
+
+if ((process.env.NODE_ENV !== 'test')){
+    const swaggerFile = require('./swagger/swagger_output.json');
+    app.get('/', (req, res) => { /* #swagger.ignore = true */ res.redirect('/doc'); });
+    app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerOptions));
+}
+
+
+//endpoints (rotas) API
+routes(app);
+
+//Inicialização do servidor
 
 if (process.env.NODE_ENV !== 'test') {
     const PORT = process.env.PORT || 4000;

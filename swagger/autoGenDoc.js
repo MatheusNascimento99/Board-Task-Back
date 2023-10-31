@@ -10,7 +10,7 @@ let endpointsFiles = ['../index.js', '../src/routes.js'];
 
 if(String(process.env.OS).toLocaleLowerCase().includes("windows")){
     outputFile = './swagger/swagger_output.json';
-    endpointsFiles = ['./index.js'];
+    endpointsFiles = ['./index.js', '../src/routes.js'];
 }
 
 
