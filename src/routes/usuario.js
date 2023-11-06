@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const EsquemaUsuario = require('../models/usuario');
 const router = express.Router();
 
-/* GET users listing. */
+
 router.post('/criar', conectarBancoDados, async function (req, res,) {
   res.send('respond with a resource 50 val:' + process.env.TEST);
   try {
@@ -26,7 +26,7 @@ router.post('/criar', conectarBancoDados, async function (req, res,) {
     if (String(error).includes("email_1 dup key")) {
       return tratarErrosEsperados(res, "Error: Já existe uma conta com esse e-mail!");
     }
-    return tratarErrosEsperados9(res, error);
+    return tratarErrosEsperados(res, error);
   }
 });
 
