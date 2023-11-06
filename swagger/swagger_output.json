@@ -51,6 +51,9 @@
     },
     "/usuario/logar": {
       "post": {
+        "tags": [
+          "Usuario"
+        ],
         "description": "",
         "responses": {
           "200": {
